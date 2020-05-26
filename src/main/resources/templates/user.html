@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          crossorigin="anonymous">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body style="text-align: center">
+<div id="app">
+    <header>
+        <div class="navbar navbar-default" style="background-color: aquamarine; margin: 0 !important">
+            <h1 style="float: left">{{ siteName }}</h1>
+            <span><a style="float: right; margin-right: 5px" href="/user?language=ua"
+                     th:text="#{label.lang.ua}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/user?language=en"
+                     th:text="#{label.lang.en}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/logout" th:text="#{logout}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/user" th:text="#{my.books}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/prospectus" th:text="#{prospectus}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/" th:text="#{main}"></a></span>
+        </div>
+    </header>
+    <div style="padding-top: 7%; text-align: center; width: 100%; float: right">
+        <input type="radio" id="one" value="1" v-model="picked">
+        <label for="one" th:text="#{orders}"></label>
+        <input type="radio" id="two" value="2" v-model="picked">
+        <label for="two" th:text="#{my.books}"></label>
+        <hr>
+    </div>
+    <!--        passive orders -->
+    <div v-if="picked==1">
+        <table style="width: 100%; padding-top: 10%; display: table" class="table table-borderless">
+            <thead>
+            <tr>
+                <th th:text="#{book.name}"></th>
+                <th th:text="#{order.date}"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="order in passiveOrders">
+                <td><h1 v-text="order.bookName"></h1></td>
+                <td><h1 v-text="order.startDate"></h1></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--    active orders-->
+    <div v-else>
+        <table style="width: 100%; padding-top: 10%; display: table" class="table table-borderless">
+            <thead>
+            <tr>
+                <th th:text="#{book.name}"></th>
+                <th th:text="#{start.date}"></th>
+                <th th:text="#{end.date}"></th>
+                <th th:text="#{return}"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="order in activeOrders">
+                <td><h1 v-text="order.bookName"></h1></td>
+                <td><h1 v-text="order.startDate"></h1></td>
+                <td><h1 v-text="order.endDate"></h1></td>
+                <td>
+                    <button class="btn btn-warning" v-on:click="returnBook(order)" th:text="#{return}"></button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+    let app = new Vue({
+        el: '#app',
+        data: {
+            activeOrders: [],
+            passiveOrders: [],
+            picked: '',
+            siteName: 'e-lib'
+        },
+        async mounted() {
+            await this.getActiveOrders();
+            await this.getPassiveOrders();
+        },
+        methods: {
+            async getActiveOrders() {
+                let res = await axios.get('/user/active');
+                if (!res) return;
+                this.activeOrders = res.data;
+            },
+            async getPassiveOrders() {
+                let res = await axios.get('/user/passive');
+                if (!res) return;
+                this.passiveOrders = res.data;
+            },
+            async returnBook(order) {
+                let res = await axios.put('/user/return', order)
+                    .catch(function (error) {
+                        if (error.response) {
+                            if(error.response.status == '404')
+                                return;//todo show field with this problem
+                        }
+                    });
+                if (!res) return;
+                this.message = res.data + book.name;
+                await this.getActiveOrders();
+            },
+
+        }
+
+
+    });
+</script>
+<style lang="less">
+    input {
+        margin-top: 17px;
+    }
+
+    body {
+        font-family: Arial;
+        font-style: normal;
+    }
+
+    header {
+        position: fixed;
+        height: 10%;
+        left: 0;
+        top: 0;
+        width: 100%;
+        z-index: 10;
+    }
+
+    span {
+        font-size: 30px;
+        height: content-box;
+    }
+</style>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body style="text-align: center">
+<div id="app">
+    <header>
+        <div class="navbar navbar-default" style="background-color: aquamarine; margin: 0 !important">
+            <h1 style="float: left">{{ siteName }}</h1>
+            <span><a style="float: right; margin-right: 5px" href="/?language=ua"
+                     th:text="#{label.lang.ua}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/?language=en"
+                     th:text="#{label.lang.en}"></a></span>
+            <!--            admin-->
+            <div v-if="user==1">
+
+                <span><a style="float: right; margin-right: 5px" href="/logout" th:text="#{logout}"></a></span>
+                <span><a style="float: right; margin-right: 5px" href="/book" th:text="#{books}"></a></span>
+                <span><a style="float: right; margin-right: 5px" href="/orders" th:text="#{orders}"></a></span>
+                <span><a style="float: right; margin-right: 5px" href="/" th:text="#{main}"></a></span>
+            </div>
+            <!--            user-->
+            <div v-else-if="user==2">
+                <span><a style="float: right; margin-right: 5px" href="/logout" th:text="#{logout}"></a></span>
+                <span><a style="float: right; margin-right: 5px" href="/user" th:text="#{my.books}"></a></span>
+                <span><a style="float: right; margin-right: 5px" href="/prospectus" th:text="#{prospectus}"></a></span>
+                <span><a style="float: right; margin-right: 5px" href="/" th:text="#{main}"></a></span>
+            </div>
+            <!--            guest-->
+            <div v-else>
+                <span><a style="float: right; margin-right: 5px" href="/login" th:text="#{sign.in}"></a></span>
+                <span><a style="float: right; margin-right: 5px" href="/reg" th:text="#{sign.up}"></a></span>
+                <span><a style="float: right; margin-right: 5px" href="/" th:text="#{main}"></a></span>
+            </div>
+        </div>
+    </header>
+</div>
+<script type="text/javascript">
+    let app = new Vue({
+        el: '#app',
+        data: {
+            user: 3,
+            siteName: 'e-lib',
+        },
+        async mounted() {
+            await this.getAuthorities();
+        },
+        methods: {
+            async getAuthorities() {
+                let res = await axios.get('/authorities');
+                if (!res) return;
+                this.user = res.data;
+                console.log(this.user);
+            }
+        }
+    });
+</script>
+</body>
+</html>

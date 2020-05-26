@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<body style="text-align:center">
+<div id="app">
+    <header>
+        <div class="navbar navbar-default" style="background-color: aquamarine;">
+            <h1 style="float: left">{{ siteName }}</h1>
+            <span><a style="float: right; margin-right: 5px" href="/reg?language=ua"
+                     th:text="#{label.lang.ua}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/reg?language=en"
+                     th:text="#{label.lang.en}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/login" th:text="#{sign.in}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/reg" th:text="#{sign.up}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/" th:text="#{main}"></a></span>
+        </div>
+    </header>
+    <div style="margin:0 auto;width:75%;text-align:left">
+        <p class="h3 text-center mb-4" th:text="#{sign.up}"></p>
+        <div style="max-width: 500px; margin: auto;">
+            <input id="username" class="form-control" th:placeholder="#{username}" type="text" v-model="username">
+            <input id="phone" class="form-control" th:placeholder="#{phone}" type="text" v-model="phone">
+            <input type="email" class="form-control" id="email" th:placeholder="#{email}" v-model="email">
+            <input type="password" class="form-control" th:placeholder="#{password}" id="password"
+                   v-model="password">
+            <div style="text-align: center; margin-top: 20px">
+                <button @click="reg()" class="btn btn-warning " style="width: 30%;" th:text="#{submit}"></button>
+            </div>
+        </div>
+    </div>
+    <footer>
+        {{ new Date().getFullYear() }} — <strong>e-lib</strong>
+    </footer>
+</div>
+<script type="text/javascript">
+    let app = new Vue({
+        el: '#app',
+        data: {
+            siteName: 'e-lib',
+            username: '',
+            phone: '',
+            email: '',
+            password: '',
+            message: null
+        },
+        methods: {
+            async reg() {
+                let res = await axios.post('/reg', {
+                    username: this.username,
+                    email: this.email,
+                    phone: this.phone,
+                    password: this.password,
+                })
+                    .catch(function (error) {
+                        if (error.response) {
+                            if(error.response.status == '404')
+                                return;//todo show field with this problem
+                        }
+                    });
+                if (!res) return;
+                this.message = res.data;
+            },
+        }
+    })
+</script>
+<style lang="less">
+    input {
+        margin-top: 17px;
+    }
+
+    body {
+        font-family: Arial;
+        font-style: normal;
+    }
+
+    footer {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 80px;
+    }
+</style>
+</body>
+</html>

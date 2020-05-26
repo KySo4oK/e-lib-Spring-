@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<body style="text-align:center">
+<div id="app">
+    <header>
+        <div class="navbar navbar-default" style="background-color: aquamarine;">
+            <h1 style="float: left">{{ siteName }}</h1>
+            <span><a style="float: right; margin-right: 5px" href="/login?language=ua" th:text = "#{label.lang.ua}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/login?language=en" th:text = "#{label.lang.en}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/login" th:text = "#{sign.in}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/reg" th:text = "#{sign.up}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/" th:text = "#{main}"></a></span>
+        </div>
+    </header>
+    <div style="margin:0 auto;width:75%;text-align:left">
+        <p class="h3 text-center mb-4" th:text = "#{sign.in}"></p>
+        <form action="login" method="post" style="max-width: 500px; margin: auto;">
+            <input id="username" class="form-control" th:placeholder="#{username}" type="text" name="username" v-model="username">
+            <input type="password" class="form-control" th:placeholder="#{password}" name="password" id="password"
+                   v-model="password">
+            <div style="text-align: center; margin-top: 20px">
+                <input class="btn btn-warning" type="submit" name="submit" th:value="#{submit}">
+            </div>
+        </form>
+    </div>
+    <footer padless>
+        <col
+                class="text-center"
+                cols="12"
+        >
+        {{ new Date().getFullYear() }} — <strong>e-lib</strong>
+        </col>
+    </footer>
+</div>
+<script type="text/javascript">
+    let app = new Vue({
+        el: '#app',
+        data: {
+            siteName: 'e-lib',
+            username: '',
+            password: '',
+            message: null
+        },
+        methods: {
+            async login() {
+                let res = await axios.post('/login', {
+                    password: this.password,
+                    username: this.username,
+                }, {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    }
+                });
+                if (!res) return;
+                this.message = res.data;
+            },
+        }
+    })
+</script>
+<style lang="less">
+    input {
+        margin-top: 17px;
+    }
+
+    body {
+        font-family: Arial;
+        font-style: normal;
+    }
+
+    footer {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 80px;
+    }
+</style>
+</body>
+</html>
