@@ -1,6 +1,7 @@
 package extclasses.final_project_spring.controller;
 
 import extclasses.final_project_spring.dto.UserDTO;
+import extclasses.final_project_spring.entity.Role;
 import extclasses.final_project_spring.service.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -62,10 +63,9 @@ public class PageController {
 
     @GetMapping("/authorities")
     public @ResponseBody
-    int getAuthorities(Authentication authentication) {
+    int getAuthorities(Authentication authentication) {//todo remove
         if (authentication == null) return 3;
         log.info("{}", authentication.getAuthorities());
-        String authorities = authentication.getAuthorities().toString();
-        return authorities.contains("ADMIN") ? 1 : 2;
+        return authentication.getAuthorities().contains(Role.ADMIN) ? 1 : 2;
     }
 }
