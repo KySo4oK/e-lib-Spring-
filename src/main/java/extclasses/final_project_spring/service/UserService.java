@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -40,15 +39,15 @@ public class UserService implements UserDetailsService {
 //        userRepository.save(user);
 //    }
 
-    @Transactional(rollbackFor = UserAlreadyExistException.class)
     public void setNewUser(UserDTO userDTO) {
         log.info("save new user {}", userDTO.toString());
-        if (userRepository.findByUsername(userDTO.getUsername()).isPresent()) {
-            throw new UserAlreadyExistException("user - " + userDTO.getUsername() + " already exist");
-        }
         User user = new User(userDTO);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        try {
+            userRepository.save(user);
+        } catch (Exception e) {
+            throw new UserAlreadyExistException("user - " + userDTO.getUsername() + " already exist");
+        }
     }
 
     @Override
