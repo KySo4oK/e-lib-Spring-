@@ -9,6 +9,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Log4j2
 @Controller
 public class PageController {
@@ -36,8 +38,8 @@ public class PageController {
 
     @PostMapping("/reg")
     @ResponseStatus(HttpStatus.CREATED)
-    public void getNewUser(@RequestBody UserDTO userDTO) {
-        System.out.println(userDTO);
+    public void getNewUser(@Valid @RequestBody UserDTO userDTO) {
+        log.info("{}", userDTO);
         userService.setNewUser(userDTO);
     }
 
