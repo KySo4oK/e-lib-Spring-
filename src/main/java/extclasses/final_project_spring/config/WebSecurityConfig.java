@@ -48,8 +48,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasAnyAuthority("ADMIN", "USER")
                 .antMatchers("/user", "/prospectus", "/order", "/user/return",
                         "/user/active", "/user/passive").hasAuthority("USER")
-                .antMatchers("/main", "/", "/css/**", "/add", "/edit", "/authorities").permitAll()
-                .antMatchers("/reg", "/login").anonymous()
+                .antMatchers("/css/**").permitAll()
+                .antMatchers("/reg", "/", "/login").anonymous()
                 .and().formLogin().successHandler(successHandler).loginPage("/login");
     }
 
