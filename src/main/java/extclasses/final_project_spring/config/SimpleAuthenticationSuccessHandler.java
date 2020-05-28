@@ -1,5 +1,6 @@
 package extclasses.final_project_spring.config;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.DefaultRedirectStrategy;
@@ -11,10 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 
+@Log4j2
 @Component
 public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
-    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+    private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest arg0, HttpServletResponse arg1, Authentication authentication) {
@@ -25,13 +27,13 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
                 try {
                     redirectStrategy.sendRedirect(arg0, arg1, "/user");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    log.error(e.getMessage());
                 }
             } else if (authority.getAuthority().equals("ADMIN")) {
                 try {
                     redirectStrategy.sendRedirect(arg0, arg1, "/orders");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    log.error(e.getMessage());
                 }
             } else {
                 throw new IllegalStateException();
