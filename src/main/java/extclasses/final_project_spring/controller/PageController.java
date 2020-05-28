@@ -3,6 +3,7 @@ package extclasses.final_project_spring.controller;
 import extclasses.final_project_spring.dto.UserDTO;
 import extclasses.final_project_spring.entity.Role;
 import extclasses.final_project_spring.service.UserService;
+import extclasses.final_project_spring.util.Validator;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -38,8 +39,9 @@ public class PageController {
 
     @PostMapping("/reg")
     @ResponseStatus(HttpStatus.CREATED)
-    public void getNewUser(@Valid @RequestBody UserDTO userDTO) {
+    public void getNewUser(@RequestBody UserDTO userDTO) {
         log.info("{}", userDTO);
+        Validator.checkRegistration(userDTO);
         userService.setNewUser(userDTO);
     }
 
