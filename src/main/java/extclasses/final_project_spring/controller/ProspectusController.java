@@ -53,7 +53,7 @@ public class ProspectusController {
         return authorService.getAllAuthors();
     }
 
-    @PostMapping("/filter/{page}/{number}")//todo check data for all cont
+    @PostMapping("/filter/{page}/{number}")
     public @ResponseBody
     List<BookDTO> getBooksByFilter(@PathVariable("page") String page,
                                    @PathVariable("number") String number,
