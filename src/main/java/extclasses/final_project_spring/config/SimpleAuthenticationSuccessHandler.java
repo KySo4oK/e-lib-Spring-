@@ -20,7 +20,6 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest arg0, HttpServletResponse arg1, Authentication authentication) {
-
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         authorities.forEach(authority -> {
             if (authority.getAuthority().equals("USER")) {
@@ -39,7 +38,5 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
                 throw new IllegalStateException();
             }
         });
-
     }
-
 }
