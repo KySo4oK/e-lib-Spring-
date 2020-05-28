@@ -2,6 +2,7 @@ package extclasses.final_project_spring.controller;
 
 import extclasses.final_project_spring.dto.BookDTO;
 import extclasses.final_project_spring.service.BookService;
+import extclasses.final_project_spring.util.Validator;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ public class BookController {
     @ResponseStatus(HttpStatus.CREATED)
     public void addBook(@RequestBody BookDTO bookDTO) {
         log.info("add book {}", bookDTO.getName());
+        Validator.checkNewBook(bookDTO);
         bookService.saveNewBookFromClient(bookDTO);
     }
 

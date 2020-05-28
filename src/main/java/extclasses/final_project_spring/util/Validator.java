@@ -1,5 +1,6 @@
 package extclasses.final_project_spring.util;
 
+import extclasses.final_project_spring.dto.BookDTO;
 import extclasses.final_project_spring.dto.UserDTO;
 import extclasses.final_project_spring.exception.IncorrectDataException;
 
@@ -14,5 +15,15 @@ public class Validator {
             return;
         }
         throw new IncorrectDataException("bad credentials");
+    }
+
+    public static void checkNewBook(BookDTO bookDTO) {
+        if (Pattern.matches(ValidationRegex.bookName, bookDTO.getName()) &&
+                Pattern.matches(ValidationRegex.bookNameUa, bookDTO.getNameUa()) &&
+                bookDTO.getAuthors().length > 0 &&
+                bookDTO.getTags().length > 0) {
+            return;
+        }
+        throw new IncorrectDataException("impossible book values");
     }
 }
