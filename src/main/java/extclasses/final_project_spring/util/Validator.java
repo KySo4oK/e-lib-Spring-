@@ -1,8 +1,8 @@
 package extclasses.final_project_spring.util;
 
 import extclasses.final_project_spring.dto.UserDTO;
+import extclasses.final_project_spring.exception.IncorrectDataException;
 
-import javax.validation.ValidationException;
 import java.util.regex.Pattern;
 
 public class Validator {
@@ -13,6 +13,6 @@ public class Validator {
                 && Pattern.matches(ValidationRegex.emailRegex, userDTO.getEmail())) {
             return;
         }
-        throw new ValidationException("bad credentials");
+        throw new IncorrectDataException("bad credentials");
     }
 }
