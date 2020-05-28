@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -35,6 +35,7 @@
             <div style="text-align: center; margin-top: 20px">
                 <button @click="reg()" class="btn btn-warning " style="width: 30%;" th:text="#{submit}"></button>
             </div>
+            <h1 class="alert alert-warning" v-show="error" th:text="#{incorrect.data}"></h1>
         </div>
     </div>
     <footer>
@@ -50,22 +51,22 @@
             phone: '',
             email: '',
             password: '',
-            message: null
+            message: null,
+            error: false
         },
         methods: {
             async reg() {
+                this.error = false;
                 let res = await axios.post('/reg', {
                     username: this.username,
                     email: this.email,
                     phone: this.phone,
                     password: this.password,
                 })
-                    .catch(function (error) {
-                        if (error.response) {
-                            if(error.response.status == '404')
-                                return;//todo show field with this problem
-                        }
+                    .catch((error) => {
+                        this.error = true;
                     });
+
                 if (!res) return;
                 this.message = res.data;
             },
