@@ -10,12 +10,19 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private UserService userService;
     private PasswordEncoder passwordEncoder;
+    private AuthenticationSuccessHandler successHandler;
+
+    @Autowired
+    public void setSuccessHandler(AuthenticationSuccessHandler successHandler) {
+        this.successHandler = successHandler;
+    }
 
     @Autowired
     public void setUserService(UserService userService) {
@@ -43,11 +50,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/user/active", "/user/passive").hasAuthority("USER")
                 .antMatchers("/main", "/", "/css/**", "/add", "/edit", "/authorities").permitAll()
                 .antMatchers("/reg", "/login").anonymous()
-                .and().formLogin().loginPage("/login");
+                .and().formLogin().successHandler(successHandler).loginPage("/login");
     }
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder(8);
     }
+
 }
