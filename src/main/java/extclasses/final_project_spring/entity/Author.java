@@ -21,8 +21,4 @@ public class Author {
     private Long authorId;
     private String name;
     private String nameUa;
-
-    public Author(String name) {
-        this.name = name;
-    }
 }
