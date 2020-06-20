@@ -19,7 +19,9 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
     private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest arg0, HttpServletResponse arg1, Authentication authentication) {
+    public void onAuthenticationSuccess(HttpServletRequest arg0,
+                                        HttpServletResponse arg1,
+                                        Authentication authentication) {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         authorities.forEach(authority -> {
             if (authority.getAuthority().equals("USER")) {
