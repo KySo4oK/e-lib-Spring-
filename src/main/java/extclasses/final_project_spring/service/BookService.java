@@ -6,7 +6,7 @@ import extclasses.final_project_spring.entity.Author;
 import extclasses.final_project_spring.entity.Book;
 import extclasses.final_project_spring.entity.Shelf;
 import extclasses.final_project_spring.entity.Tag;
-import extclasses.final_project_spring.exception.BookNotFoundException;
+import extclasses.final_project_spring.exception.CustomException;
 import extclasses.final_project_spring.repository.BookRepository;
 import extclasses.final_project_spring.repository.ShelfRepository;
 import lombok.extern.log4j.Log4j2;
@@ -122,7 +122,7 @@ public class BookService {
                         filterDTO.getTags(), pageable);
     }
 
-    public void editBookAndSave(BookDTO bookDTO) throws BookNotFoundException {
+    public void editBookAndSave(BookDTO bookDTO) {
         log.info("save book {}", bookDTO);
         bookRepository.save(getEditedBook(bookDTO));
     }
@@ -130,13 +130,13 @@ public class BookService {
     private Book getEditedBook(BookDTO bookDTO) {
         Book book = bookRepository
                 .findById(bookDTO.getId())
-                .orElseThrow(() -> new BookNotFoundException("book not exist"));
+                .orElseThrow(() -> new CustomException("book.not.found"));
         book.setAuthors(authorService.getAuthorsFromStringArray(bookDTO.getAuthors()));
         book.setTags(tagService.getTagsByStringArray(bookDTO.getTags()));
         return book;
     }
 
-    public void deleteBook(long id) throws BookNotFoundException {
+    public void deleteBook(long id) {
         log.info("delete book with id {}", id);
         bookRepository.deleteById(id);
     }

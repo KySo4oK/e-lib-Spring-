@@ -1,7 +1,7 @@
 package extclasses.final_project_spring.service;
 
 import extclasses.final_project_spring.entity.Author;
-import extclasses.final_project_spring.exception.AuthorNotFoundException;
+import extclasses.final_project_spring.exception.CustomException;
 import extclasses.final_project_spring.repository.AuthorRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -38,7 +38,7 @@ public class AuthorService {
         log.info("get authors from array {}", Arrays.toString(authors));
         return Arrays.stream(authors)
                 .map(x -> getByNameWithLocale(x)
-                        .orElseThrow(() -> new AuthorNotFoundException("can not found author")))
+                        .orElseThrow(() -> new CustomException("author.not.found")))
                 .collect(Collectors.toList());
     }
 

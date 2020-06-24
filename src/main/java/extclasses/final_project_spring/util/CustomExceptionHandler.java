@@ -1,5 +1,6 @@
 package extclasses.final_project_spring.util;
 
+import extclasses.final_project_spring.exception.CustomException;
 import extclasses.final_project_spring.exception.IncorrectDataException;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -18,9 +19,9 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         this.messageSource = messageSource;
     }
 
-    @ExceptionHandler({IncorrectDataException.class})
+    @ExceptionHandler({IncorrectDataException.class, CustomException.class})
     public final ResponseEntity<String> handleAllExceptions(Exception ex, Locale locale) {
-        return new ResponseEntity<>(messageSource.getMessage("exc", null, locale),
+        return new ResponseEntity<>(messageSource.getMessage(ex.getMessage(), null, locale),
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

@@ -1,13 +1,16 @@
 package extclasses.final_project_spring.service;
 
 import extclasses.final_project_spring.entity.Tag;
-import extclasses.final_project_spring.exception.TagNotFoundException;
+import extclasses.final_project_spring.exception.CustomException;
 import extclasses.final_project_spring.repository.TagRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Log4j2
@@ -35,7 +38,7 @@ public class TagService {
         log.info("get tags from array {}", Arrays.toString(tags));
         return Arrays.stream(tags)
                 .map(x -> getByNameAndLocale(x)
-                        .orElseThrow(() -> new TagNotFoundException("can not found tag")))
+                        .orElseThrow(() -> new CustomException("tag.not.found")))
                 .collect(Collectors.toList());
     }
 

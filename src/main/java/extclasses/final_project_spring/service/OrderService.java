@@ -5,16 +5,13 @@ import extclasses.final_project_spring.dto.OrderDTO;
 import extclasses.final_project_spring.entity.Book;
 import extclasses.final_project_spring.entity.Order;
 import extclasses.final_project_spring.entity.Shelf;
-import extclasses.final_project_spring.exception.BookNotAvailableException;
-import extclasses.final_project_spring.exception.BookNotFoundException;
-import extclasses.final_project_spring.exception.OrderNotFoundException;
+import extclasses.final_project_spring.exception.CustomException;
 import extclasses.final_project_spring.repository.BookRepository;
 import extclasses.final_project_spring.repository.OrderRepository;
 import extclasses.final_project_spring.repository.ShelfRepository;
 import extclasses.final_project_spring.repository.UserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +20,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Log4j2
@@ -52,9 +48,9 @@ public class OrderService {
     private Order buildNewOrder(BookDTO bookDTO, String username) {
         return Order.builder()
                 .user(userRepository.findByUsername(username)
-                        .orElseThrow(() -> new UsernameNotFoundException("User not exist")))
+                        .orElseThrow(() -> new CustomException("user.not.found")))
                 .book(bookRepository.findById(bookDTO.getId())
-                        .orElseThrow(() -> new BookNotFoundException("book not exist")))
+                        .orElseThrow(() -> new CustomException("book.not.found")))
                 .active(false)
                 .endDate(LocalDate.now())
                 .startDate(LocalDate.now())
@@ -69,8 +65,8 @@ public class OrderService {
     private Order activateAndChangeOrder(OrderDTO orderDTO) {
         Order order = orderRepository
                 .findById(orderDTO.getId())
-                .orElseThrow(() -> new OrderNotFoundException("Active order not exist"));
-        if (!order.getBook().isAvailable()) throw new BookNotAvailableException("Book not available");
+                .orElseThrow(() -> new CustomException("order.not.found"));
+        if (!order.getBook().isAvailable()) throw new CustomException("book.not.available");
         order.setActive(true);
         order.setStartDate(LocalDate.now());
         order.setEndDate(LocalDate.now().plusMonths(PERIOD_OF_USE));
@@ -145,7 +141,7 @@ public class OrderService {
     private Order getOrderAndPrepareBookForReturning(OrderDTO orderDTO) {
         Order order = orderRepository
                 .findById(orderDTO.getId())
-                .orElseThrow(() -> new OrderNotFoundException("order not exist"));
+                .orElseThrow(() -> new CustomException("order.not.found"));
         prepareBookForReturning(order.getBook());
         return order;
     }
