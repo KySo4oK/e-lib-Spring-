@@ -25,18 +25,16 @@
         </div>
     </header>
     <div style="margin:0 auto;width:75%;text-align:left">
-        <p class="h3 text-center mb-4" th:text="#{sign.up}"></p>
-        <div style="max-width: 500px; margin: auto;">
-            <input id="username" class="form-control" th:placeholder="#{username}" type="text" v-model="username">
-            <input id="phone" class="form-control" th:placeholder="#{phone}" type="text" v-model="phone">
-            <input type="email" class="form-control" id="email" th:placeholder="#{email}" v-model="email">
-            <input type="password" class="form-control" th:placeholder="#{password}" id="password"
-                   v-model="password">
+        <p class="h3 text-center mb-4"th:text="#{sign.up}"></p>
+        <form action="reg" method="post" style="max-width: 500px; margin: auto;">
+            <input id="username" class="form-control" type="text" th:placeholder="#{username}" name="username">
+            <input id="phone" class="form-control" type="text" th:placeholder="#{phone}" name="phone">
+            <input type="email" class="form-control" id="email" th:placeholder="#{email}" name="email">
+            <input type="password" class="form-control" id="password" th:placeholder="#{password}" name="password">
             <div style="text-align: center; margin-top: 20px">
-                <button @click="reg()" class="btn btn-warning " style="width: 30%;" th:text="#{submit}"></button>
+                <input class="btn btn-warning" type="submit" name="submit" th:value="#{submit}">
             </div>
-            <h1 class="alert alert-warning" v-show="error" th:text="#{incorrect.data}"></h1>
-        </div>
+        </form>
     </div>
     <footer>
         {{ new Date().getFullYear() }} — <strong>e-lib</strong>
@@ -47,30 +45,7 @@
         el: '#app',
         data: {
             siteName: 'e-lib',
-            username: '',
-            phone: '',
-            email: '',
-            password: '',
-            message: null,
-            error: false
         },
-        methods: {
-            async reg() {
-                this.error = false;
-                let res = await axios.post('/reg', {
-                    username: this.username,
-                    email: this.email,
-                    phone: this.phone,
-                    password: this.password,
-                })
-                    .catch((error) => {
-                        this.error = true;
-                    });
-
-                if (!res) return;
-                this.message = res.data;
-            },
-        }
     })
 </script>
 <style lang="less">

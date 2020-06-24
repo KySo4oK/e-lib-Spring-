@@ -38,7 +38,7 @@ public class PageController {
 
     @PostMapping("/reg")
     @ResponseStatus(HttpStatus.CREATED)
-    public void getNewUser(@RequestBody UserDTO userDTO) {
+    public void saveNewUser(UserDTO userDTO) {
         log.info("{}", userDTO);
         Validator.checkRegistration(userDTO);
         userService.setNewUser(userDTO);
