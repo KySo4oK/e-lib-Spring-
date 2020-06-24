@@ -14,7 +14,7 @@ public class Validator {
                 && Pattern.matches(ValidationRegex.emailRegex, userDTO.getEmail())) {
             return;
         }
-        throw new IncorrectDataException("bad credentials");
+        throw new IncorrectDataException("bad.credentials");
     }
 
     public static void checkNewBook(BookDTO bookDTO) {
@@ -24,6 +24,6 @@ public class Validator {
                 bookDTO.getTags().length > 0) {
             return;
         }
-        throw new IncorrectDataException("impossible book values");
+        throw new IncorrectDataException("impossible.book.values");
     }
 }
