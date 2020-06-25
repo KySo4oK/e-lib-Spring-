@@ -72,11 +72,13 @@
                             <h1 v-text="author">
                             </h1>
                         </div>
-                   </td>
-                    <td><div v-for="tag in book.tags">
-                        <h1 v-text="tag">
-                        </h1>
-                    </div></td>
+                    </td>
+                    <td>
+                        <div v-for="tag in book.tags">
+                            <h1 v-text="tag">
+                            </h1>
+                        </div>
+                    </td>
                     <td>
                         <button class="btn btn-warning" style="height: 100%; width: 100%;" v-on:click="orderBook(book)"
                                 th:text="#{order}">
@@ -103,7 +105,6 @@
             addedAuthors: [],
             partOfName: null,
             authors: [],
-            message: null,
             siteName: 'e-lib',
             page: 0,
             filter: false,
@@ -117,7 +118,7 @@
             async changeList() {
                 this.page = 0;
                 this.filter = true;
-                this.loadByFilter();
+                await this.loadByFilter();
             },
             async loadByFilter() {
                 let filter = {
@@ -125,7 +126,10 @@
                     authors: this.addedAuthors,
                     name: '%' + this.partOfName + '%',
                 };
-                let res = await axios.post('/filter/' + this.page + "/5", filter);
+                let res = await axios.post('/filter/' + this.page + "/5", filter)
+                    .catch((error) => {
+                        alert(error.response.data.error);
+                    });
                 if (!res) return;
                 if (this.page === 0) {
                     this.books = res.data;
@@ -138,7 +142,6 @@
                 let res = await axios.get('/tags');
                 if (!res) return;
                 this.tags = res.data;
-                console.log(this.books);
             },
             async getBooks() {
                 let res = await axios.get('/books/' + this.page + "/5");
@@ -152,22 +155,18 @@
             },
             async orderBook(book) {
                 let res = await axios.post('/order', book)
-                    .catch(function (error) {
-                        if (error.response) {
-                            if(error.response.status == '404')
-                                return;//todo show field with this problem
-                        }
+                    .catch((error) => {
+                        alert(error.response.data.error);
                     });
                 if (!res) return;
-                this.message = res.data + book.name;
             },
             async loadMore() {
                 if (this.filter) {
                     this.page++;
-                    this.loadByFilter();
+                    await this.loadByFilter();
                 } else {
                     this.page++;
-                    this.getBooks();
+                    await this.getBooks();
                 }
             }
         }

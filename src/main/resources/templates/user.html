@@ -87,14 +87,10 @@
             },
             async returnBook(order) {
                 let res = await axios.put('/user/return', order)
-                    .catch(function (error) {
-                        if (error.response) {
-                            if(error.response.status == '404')
-                                return;//todo show field with this problem
-                        }
+                    .catch((error) => {
+                        alert(error.response.data.error);
                     });
                 if (!res) return;
-                this.message = res.data + book.name;
                 await this.getActiveOrders();
             },
 

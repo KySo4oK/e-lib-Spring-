@@ -94,11 +94,8 @@
             },
             async permitOrder(order) {
                 let res = await axios.put('/permit', order)
-                    .catch(function (error) {
-                        if (error.response) {
-                            if(error.response.status == '404')
-                                return;//todo show field with this problem
-                        }
+                    .catch((error) => {
+                        alert(error.response.data.error);
                     });
                 if (!res) return;
                 await this.getActiveOrders();

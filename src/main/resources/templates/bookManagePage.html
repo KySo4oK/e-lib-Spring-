@@ -172,7 +172,6 @@
             addedAuthors: [],
             partOfName: null,
             authors: [],
-            message: null,
             page: 0,
             siteName: 'e-lib',
         },
@@ -183,7 +182,7 @@
         },
         methods: {
             async addBook() {
-                let res = await axios.post('/add', this.addedBook)
+                await axios.post('/add', this.addedBook)
                     .catch((error) => {
                         alert(error.response.data.error);
                     });
@@ -212,7 +211,6 @@
                 let res = await axios.get('/tags');
                 if (!res) return;
                 this.tags = res.data;
-                console.log(this.books);
             },
             async getBooks() {
                 let res = await axios.get('/books/' + this.page + "/5");
@@ -226,37 +224,29 @@
             },
             async editBook(book) {
                 let res = await axios.put('/edit', book)
-                    .catch(function (error) {
-                        if (error.response) {
-                            if (error.response.status == '404')
-                                return;//todo show field with this problem
-                        }
+                    .catch((error) => {
+                        alert(error.response.data.error);
                     });
                 if (!res) return;
-                this.message = res.data + book.name;
                 this.page = 0;
                 await this.getBooks();
             },
             async deleteBook(book) {
                 let res = await axios.delete('/delete/' + book.id)
-                    .catch(function (error) {
-                        if (error.response) {
-                            if (error.response.status == '404')
-                                return;//todo show field with this problem
-                        }
+                    .catch((error) => {
+                        alert(error.response.data.error);
                     });
                 if (!res) return;
-                this.message = res.data + book.name;
                 this.page = 0;
                 await this.getBooks();
             },
             async loadMore() {
                 if (this.filter) {
                     this.page++;
-                    this.loadByFilter();
+                    await this.loadByFilter();
                 } else {
                     this.page++;
-                    this.getBooks();
+                    await this.getBooks();
                 }
             }
         }
