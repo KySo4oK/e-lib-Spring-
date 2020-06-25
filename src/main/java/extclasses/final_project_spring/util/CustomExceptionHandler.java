@@ -1,7 +1,6 @@
 package extclasses.final_project_spring.util;
 
 import extclasses.final_project_spring.exception.CustomException;
-import extclasses.final_project_spring.exception.IncorrectDataException;
 import org.springframework.context.MessageSource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -20,7 +19,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         this.messageSource = messageSource;
     }
 
-    @ExceptionHandler({IncorrectDataException.class, CustomException.class})
+    @ExceptionHandler({CustomException.class})
     public final ResponseEntity<Map<String, String>> handleCustomExceptions(Exception ex, Locale locale) {
         Map<String, String> response = new HashMap<>();
         response.put("error", messageSource.getMessage(ex.getMessage(), null, locale));

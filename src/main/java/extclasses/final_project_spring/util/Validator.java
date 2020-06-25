@@ -1,8 +1,7 @@
 package extclasses.final_project_spring.util;
 
 import extclasses.final_project_spring.dto.BookDTO;
-import extclasses.final_project_spring.dto.UserDTO;
-import extclasses.final_project_spring.exception.IncorrectDataException;
+import extclasses.final_project_spring.exception.CustomException;
 
 import java.util.regex.Pattern;
 
@@ -14,6 +13,6 @@ public class Validator {
                 bookDTO.getTags().length > 0) {
             return;
         }
-        throw new IncorrectDataException("impossible.book.values");
+        throw new CustomException("impossible.book.values");
     }
 }
