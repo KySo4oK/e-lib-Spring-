@@ -26,11 +26,20 @@
     </header>
     <div style="margin:0 auto;width:75%;text-align:left">
         <p class="h3 text-center mb-4"th:text="#{sign.up}"></p>
-        <form action="reg" method="post" style="max-width: 500px; margin: auto;">
-            <input id="username" class="form-control" type="text" th:placeholder="#{username}" name="username">
-            <input id="phone" class="form-control" type="text" th:placeholder="#{phone}" name="phone">
-            <input type="email" class="form-control" id="email" th:placeholder="#{email}" name="email">
-            <input type="password" class="form-control" id="password" th:placeholder="#{password}" name="password">
+        <!--/*@thymesVar id="user" type="extclasses.final_project_spring.dto.UserDTO"*/-->
+        <form action="#" th:action="@{/reg}" th:object="${user}" method="post" style="max-width: 500px; margin: auto;">
+            <input class="form-control" type="text" th:placeholder="#{username}" th:field="*{username}">
+            <p th:each="error: ${#fields.errors('username')}"
+               th:text="${error}">Validation error</p>
+            <input id="phone" class="form-control" type="text" th:placeholder="#{phone}" th:field="*{phone}">
+            <p th:each="error: ${#fields.errors('phone')}"
+               th:text="${error}">Validation error</p>
+            <input type="email" class="form-control" th:placeholder="#{email}" th:field="*{email}">
+            <p th:each="error: ${#fields.errors('email')}"
+               th:text="${error}">Validation error</p>
+            <input type="password" class="form-control" th:placeholder="#{password}" th:field="*{password}">
+            <p th:each="error: ${#fields.errors('password')}"
+               th:text="${error}">Validation error</p>
             <div style="text-align: center; margin-top: 20px">
                 <input class="btn btn-warning" type="submit" name="submit" th:value="#{submit}">
             </div>

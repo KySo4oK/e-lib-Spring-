@@ -6,10 +6,16 @@ import extclasses.final_project_spring.util.Validator;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.context.request.WebRequest;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @Log4j2
 @Controller
@@ -27,7 +33,9 @@ public class PageController {
     }
 
     @GetMapping("/reg")
-    public String getRegPage() {
+    public String getRegPage(WebRequest request, Model model) {
+        UserDTO userDTO = new UserDTO();
+        model.addAttribute("user", userDTO);
         return "reg.html";
     }
 
@@ -38,7 +46,8 @@ public class PageController {
 
     @PostMapping("/reg")
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveNewUser(UserDTO userDTO) {
+    public void saveNewUser(@ModelAttribute("user") @Valid UserDTO userDTO,
+                            HttpServletRequest request, Errors errors) {
         log.info("{}", userDTO);
         Validator.checkRegistration(userDTO);
         userService.setNewUser(userDTO);
