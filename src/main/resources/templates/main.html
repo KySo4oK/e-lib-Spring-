@@ -12,18 +12,7 @@
 </head>
 <body style="text-align: center">
 <div id="app">
-    <header>
-        <div class="navbar navbar-default" style="background-color: aquamarine; margin: 0 !important">
-            <h1 style="float: left">{{ siteName }}</h1>
-            <span><a style="float: right; margin-right: 5px" href="/?language=ua"
-                     th:text="#{label.lang.ua}"></a></span>
-            <span><a style="float: right; margin-right: 5px" href="/?language=en"
-                     th:text="#{label.lang.en}"></a></span>
-            <span><a style="float: right; margin-right: 5px" href="/login" th:text="#{sign.in}"></a></span>
-            <span><a style="float: right; margin-right: 5px" href="/reg" th:text="#{sign.up}"></a></span>
-            <span><a style="float: right; margin-right: 5px" href="/" th:text="#{main}"></a></span>
-        </div>
-    </header>
+    <div th:replace="fragments/guest-header :: header">...</div>
 </div>
 <script type="text/javascript">
     let app = new Vue({

@@ -15,19 +15,7 @@
     </head>
 <body style="text-align: center">
 <div id="app">
-    <header>
-        <div class="navbar navbar-default" style="background-color: aquamarine; margin: 0 !important">
-            <h1 style="float: left">{{ siteName }}</h1>
-            <span><a style="float: right; margin-right: 5px" href="/book?language=ua"
-                     th:text="#{label.lang.ua}"></a></span>
-            <span><a style="float: right; margin-right: 5px" href="/book?language=en"
-                     th:text="#{label.lang.en}"></a></span>
-            <span><a style="float: right; margin-right: 5px" href="/logout" th:text="#{logout}"></a></span>
-            <span><a style="float: right; margin-right: 5px" href="/book" th:text="#{books}"></a></span>
-            <span><a style="float: right; margin-right: 5px" href="/orders" th:text="#{orders}"></a></span>
-            <span><a style="float: right; margin-right: 5px" href="/" th:text="#{main}"></a></span>
-        </div>
-    </header>
+    <div th:replace="fragments/admin-header :: header">...</div>
     <div style="padding-top: 10%; text-align: center; width: 83%; float: right">
         <input type="radio" id="one" value="1" v-model="picked">
         <label for="one" th:text="#{add.book}"></label>

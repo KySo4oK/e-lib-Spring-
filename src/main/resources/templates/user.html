@@ -12,19 +12,7 @@
 </head>
 <body style="text-align: center">
 <div id="app">
-    <header>
-        <div class="navbar navbar-default" style="background-color: aquamarine; margin: 0 !important">
-            <h1 style="float: left">{{ siteName }}</h1>
-            <span><a style="float: right; margin-right: 5px" href="/user?language=ua"
-                     th:text="#{label.lang.ua}"></a></span>
-            <span><a style="float: right; margin-right: 5px" href="/user?language=en"
-                     th:text="#{label.lang.en}"></a></span>
-            <span><a style="float: right; margin-right: 5px" href="/logout" th:text="#{logout}"></a></span>
-            <span><a style="float: right; margin-right: 5px" href="/user" th:text="#{my.books}"></a></span>
-            <span><a style="float: right; margin-right: 5px" href="/prospectus" th:text="#{prospectus}"></a></span>
-            <span><a style="float: right; margin-right: 5px" href="/" th:text="#{main}"></a></span>
-        </div>
-    </header>
+    <div th:replace="fragments/user-header :: header">...</div>
     <div style="padding-top: 7%; text-align: center; width: 100%; float: right">
         <input type="radio" id="one" value="1" v-model="picked">
         <label for="one" th:text="#{orders}"></label>

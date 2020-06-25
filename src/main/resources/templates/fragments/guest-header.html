@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<header>
+    <div class="navbar navbar-default" style="background-color: aquamarine;">
+        <h1 style="float: left">{{ siteName }}</h1>
+        <span><a style="float: right; margin-right: 5px" href="/?language=ua"
+                 th:text="#{label.lang.ua}"></a></span>
+        <span><a style="float: right; margin-right: 5px" href="/?language=en"
+                 th:text="#{label.lang.en}"></a></span>
+        <span><a style="float: right; margin-right: 5px" href="/login" th:text="#{sign.in}"></a></span>
+        <span><a style="float: right; margin-right: 5px" href="/reg" th:text="#{sign.up}"></a></span>
+        <span><a style="float: right; margin-right: 5px" href="/" th:text="#{main}"></a></span>
+    </div>
+</header>
+</body>
+</html>
