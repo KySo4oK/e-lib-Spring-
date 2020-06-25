@@ -9,10 +9,6 @@
           crossorigin="anonymous">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <head>
-        <meta charset="UTF-8">
-        <title>Title</title>
-    </head>
 <body style="text-align: center">
 <div id="app">
     <div th:replace="fragments/admin-header :: header">...</div>
@@ -60,7 +56,6 @@
         <div style="text-align: center; margin-top: 20px">
             <button v-on:click="addBook" class="btn btn-warning" style="width: 30%;" th:text="#{load}"></button>
         </div>
-        <h1 class="alert alert-warning" v-show="error" th:text="#{incorrect.data}"></h1>
     </div>
     <!--    edit or delete-->
     <div v-else>
@@ -180,7 +175,6 @@
             message: null,
             page: 0,
             siteName: 'e-lib',
-            error: false
         },
         async mounted() {
             await this.getBooks();
@@ -189,16 +183,15 @@
         },
         methods: {
             async addBook() {
-                this.error = false;
                 let res = await axios.post('/add', this.addedBook)
                     .catch((error) => {
-                        this.error = true;
+                        alert(error.response.data.error);
                     });
             },
             async changeList() {
                 this.page = 0;
                 this.filter = true;
-                this.loadByFilter();
+                await this.loadByFilter();
             },
             async loadByFilter() {
                 let filter = {
