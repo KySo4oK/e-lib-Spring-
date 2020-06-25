@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 
@@ -21,8 +21,8 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({CustomException.class})
     public final ResponseEntity<Map<String, String>> handleCustomExceptions(Exception ex, Locale locale) {
-        Map<String, String> response = new HashMap<>();
-        response.put("error", messageSource.getMessage(ex.getMessage(), null, locale));
-        return ResponseEntity.badRequest().body(response);
+        return ResponseEntity.badRequest().body(
+                Collections.singletonMap("error",
+                        messageSource.getMessage(ex.getMessage(), null, locale)));
     }
 }

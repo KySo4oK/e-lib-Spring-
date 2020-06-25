@@ -6,14 +6,17 @@ import extclasses.final_project_spring.service.AuthorService;
 import extclasses.final_project_spring.service.BookService;
 import extclasses.final_project_spring.service.OrderService;
 import extclasses.final_project_spring.service.TagService;
+import extclasses.final_project_spring.util.SuccessResponseEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Log4j2
 @RestController
@@ -22,12 +25,14 @@ public class ProspectusController {
     private final TagService tagService;
     private final AuthorService authorService;
     private final OrderService orderService;
+    private final SuccessResponseEntity responseEntity;
 
-    public ProspectusController(BookService bookService, TagService tagService, AuthorService authorService, OrderService orderService) {
+    public ProspectusController(BookService bookService, TagService tagService, AuthorService authorService, OrderService orderService, SuccessResponseEntity responseEntity) {
         this.bookService = bookService;
         this.tagService = tagService;
         this.authorService = authorService;
         this.orderService = orderService;
+        this.responseEntity = responseEntity;
     }
 
     @GetMapping(value = "/books/{page}/{number}", produces = "application/json")
@@ -57,7 +62,7 @@ public class ProspectusController {
     public @ResponseBody
     List<BookDTO> getBooksByFilter(@PathVariable("page") String page,
                                    @PathVariable("number") String number,
-                                   @RequestBody FilterDTO filterDTO) {
+                                   @RequestBody FilterDTO filterDTO) {//todo filter validation
         Pageable pageable = PageRequest.of(Integer.parseInt(page), Integer.parseInt(number));
         log.info("get books by pageable {}", pageable);
         log.info("get books by filter {}", filterDTO);
@@ -67,8 +72,9 @@ public class ProspectusController {
 
     @PostMapping("/order")
     @ResponseStatus(HttpStatus.CREATED)
-    public void orderBook(@RequestBody BookDTO bookDTO, Authentication authentication) {
+    public ResponseEntity<Map<String, String>> orderBook(@RequestBody BookDTO bookDTO, Authentication authentication) {
         log.info("order book {}", bookDTO.getName());
         orderService.createAndSaveNewOrder(bookDTO, authentication.getName());
+        return responseEntity.getSuccessResponseEntityWithMessage("order.created");
     }
 }

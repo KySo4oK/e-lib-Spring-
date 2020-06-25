@@ -96,7 +96,7 @@
                 let res = await axios.put('/permit', order)
                     .catch((error) => {
                         alert(error.response.data.error);
-                    });
+                    });//todo add alerting in all successful operation
                 if (!res) return;
                 await this.getActiveOrders();
                 await this.getPassiveOrders();
