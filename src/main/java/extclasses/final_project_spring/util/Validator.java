@@ -1,6 +1,7 @@
 package extclasses.final_project_spring.util;
 
 import extclasses.final_project_spring.dto.BookDTO;
+import extclasses.final_project_spring.dto.FilterDTO;
 import extclasses.final_project_spring.exception.CustomException;
 
 import java.util.regex.Pattern;
@@ -14,5 +15,13 @@ public class Validator {
             return;
         }
         throw new CustomException("impossible.book.values");
+    }
+
+    public static void checkFilterDTO(FilterDTO filterDTO) {
+        if (filterDTO.getName().length() <= 2 ||
+                filterDTO.getAuthors().length == 0 ||
+                filterDTO.getTags().length == 0) {
+            throw new CustomException("impossible.filter.values");
+        }
     }
 }

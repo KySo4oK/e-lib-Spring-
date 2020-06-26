@@ -7,6 +7,7 @@ import extclasses.final_project_spring.service.BookService;
 import extclasses.final_project_spring.service.OrderService;
 import extclasses.final_project_spring.service.TagService;
 import extclasses.final_project_spring.util.SuccessResponseEntity;
+import extclasses.final_project_spring.util.Validator;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -62,10 +63,11 @@ public class ProspectusController {
     public @ResponseBody
     List<BookDTO> getBooksByFilter(@PathVariable("page") String page,
                                    @PathVariable("number") String number,
-                                   @RequestBody FilterDTO filterDTO) {//todo filter validation
+                                   @RequestBody FilterDTO filterDTO) {
         Pageable pageable = PageRequest.of(Integer.parseInt(page), Integer.parseInt(number));
         log.info("get books by pageable {}", pageable);
         log.info("get books by filter {}", filterDTO);
+        Validator.checkFilterDTO(filterDTO);
         return bookService
                 .getAvailableBooksByFilter(filterDTO, pageable);
     }

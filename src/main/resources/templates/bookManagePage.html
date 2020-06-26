@@ -167,7 +167,7 @@
             tags: [],
             addedTags: [],
             addedAuthors: [],
-            partOfName: null,
+            partOfName: '',
             authors: [],
             page: 0,
         },
@@ -197,7 +197,10 @@
                     authors: this.addedAuthors,
                     name: '%' + this.partOfName + '%',
                 };
-                let res = await axios.post('/filter/' + this.page + "/5", filter);
+                let res = await axios.post('/filter/' + this.page + "/5", filter)
+                    .catch((error) => {
+                        alert(error.response.data.error);
+                    });
                 if (!res) return;
                 if (this.page === 0) {
                     this.books = res.data;

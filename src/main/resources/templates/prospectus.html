@@ -101,7 +101,7 @@
             tags: [],
             addedTags: [],
             addedAuthors: [],
-            partOfName: null,
+            partOfName: '',
             authors: [],
             page: 0,
             filter: false,
@@ -117,7 +117,7 @@
                 this.filter = true;
                 await this.loadByFilter();
             },
-            async loadByFilter() {//todo
+            async loadByFilter() {
                 let filter = {
                     tags: this.addedTags,
                     authors: this.addedAuthors,
