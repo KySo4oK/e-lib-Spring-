@@ -10,8 +10,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
 @Log4j2
 @Component
 public class UserService implements UserDetailsService {
@@ -26,17 +24,6 @@ public class UserService implements UserDetailsService {
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
-//    @PostConstruct
-//    public void newUser() {
-//        User user = new User();
-//        user.setRoles("ROLE_ADMIN");
-//        user.setPassword("admin");
-//        user.setUsername("admin");
-//        user.setActive(true);
-//        user.setEmail("admin@ukr.net");
-//        user.setPhone("+380966190691");
-//        userRepository.save(user);
-//    }
 
     public void saveNewUser(UserDTO userDTO) {
         log.info("save new user {}", userDTO.toString());
@@ -51,11 +38,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public User loadUserByUsername(String username) {
-        Optional<User> user = userRepository.findByUsername(username);
-        log.info("{}", user.toString());
-
-        user.orElseThrow(() -> new CustomException("user.not.found"));
-
-        return user.get();
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new CustomException("user.not.found"));
     }
 }
