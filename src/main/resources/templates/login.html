@@ -24,14 +24,7 @@
             </div>
         </form>
     </div>
-    <footer padless>
-        <col
-                class="text-center"
-                cols="12"
-        >
-        {{ new Date().getFullYear() }} — <strong>e-lib</strong>
-        </col>
-    </footer>
+    <div th:replace="fragments/footer :: footer">...</div>
 </div>
 <script type="text/javascript">
     let app = new Vue({
