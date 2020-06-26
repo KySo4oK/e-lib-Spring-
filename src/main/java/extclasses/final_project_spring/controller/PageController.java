@@ -9,7 +9,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.context.request.WebRequest;
 
 import javax.validation.Valid;
 
@@ -25,26 +24,26 @@ public class PageController {
 
     @GetMapping("/")
     public String getMainPage() {
-        return "main.html";
+        return "main";
     }
 
     @GetMapping("/reg")
-    public String getRegPage(WebRequest request, Model model) {
+    public String getRegPage(Model model) {
         UserDTO userDTO = new UserDTO();
         model.addAttribute("user", userDTO);
-        return "reg.html";
+        return "reg";
     }
 
     @GetMapping("/login")
     public String getLoginPage() {
-        return "login.html";
+        return "login";
     }
 
     @PostMapping("/reg")
     public String saveNewUser(@ModelAttribute("user") @Valid UserDTO userDTO, BindingResult result) {
         log.info("{}", userDTO);
         if (result.hasErrors()) {
-            return "reg.html";
+            return "reg";
         }
         userService.setNewUser(userDTO);
         return "redirect:/login";
@@ -52,21 +51,21 @@ public class PageController {
 
     @GetMapping("/prospectus")
     public String getProspectusPage() {
-        return "prospectus.html";
+        return "prospectus";
     }
 
     @GetMapping("/orders")
     public String getOrdersPage() {
-        return "orders.html";
+        return "orders";
     }
 
     @GetMapping("/user")
     public String getUserPage() {
-        return "user.html";
+        return "user";
     }
 
     @GetMapping("/book")
     public String getAddBookPage() {
-        return "bookManagePage.html";
+        return "bookManagePage";
     }
 }
