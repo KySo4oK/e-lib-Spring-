@@ -87,6 +87,9 @@
             },
             async returnBook(order) {
                 let res = await axios.put('/user/return', order)
+                    .then((response) => {
+                        alert(response.data.message);
+                    })
                     .catch((error) => {
                         alert(error.response.data.error);
                     });
