@@ -22,21 +22,11 @@ public class PageController {
         this.userService = userService;
     }
 
-    @GetMapping("/")
-    public String getMainPage() {
-        return "main";
-    }
-
     @GetMapping("/reg")
     public String getRegPage(Model model) {
         UserDTO userDTO = new UserDTO();
         model.addAttribute("user", userDTO);
         return "reg";
-    }
-
-    @GetMapping("/login")
-    public String getLoginPage() {
-        return "login";
     }
 
     @PostMapping("/reg")
@@ -47,25 +37,5 @@ public class PageController {
         }
         userService.setNewUser(userDTO);
         return "redirect:/login";
-    }
-
-    @GetMapping("/prospectus")
-    public String getProspectusPage() {
-        return "prospectus";
-    }
-
-    @GetMapping("/orders")
-    public String getOrdersPage() {
-        return "orders";
-    }
-
-    @GetMapping("/user")
-    public String getUserPage() {
-        return "user";
-    }
-
-    @GetMapping("/book")
-    public String getAddBookPage() {
-        return "bookManagePage";
     }
 }
