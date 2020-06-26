@@ -12,7 +12,7 @@ import extclasses.final_project_spring.repository.ShelfRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  * @author Rostyslav Pryimak
  */
 @Log4j2
-@Component
+@Service
 public class BookService {
     private final BookRepository bookRepository;
     private final ShelfRepository shelfRepository;

@@ -5,7 +5,7 @@ import extclasses.final_project_spring.exception.CustomException;
 import extclasses.final_project_spring.repository.AuthorRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Log4j2
-@Component
+@Service
 public class AuthorService {
     private final AuthorRepository authorRepository;
 
