@@ -38,7 +38,7 @@ public class UserService implements UserDetailsService {
 //        userRepository.save(user);
 //    }
 
-    public void setNewUser(UserDTO userDTO) {
+    public void saveNewUser(UserDTO userDTO) {
         log.info("save new user {}", userDTO.toString());
         User user = new User(userDTO);
         user.setPassword(passwordEncoder.encode(user.getPassword()));

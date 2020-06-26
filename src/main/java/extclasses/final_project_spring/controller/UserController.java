@@ -14,11 +14,10 @@ import javax.validation.Valid;
 
 @Log4j2
 @Controller
-public class PageController {
-    final
-    UserService userService;
+public class UserController {
+    private final UserService userService;
 
-    public PageController(UserService userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
@@ -35,7 +34,7 @@ public class PageController {
         if (result.hasErrors()) {
             return "reg";
         }
-        userService.setNewUser(userDTO);
+        userService.saveNewUser(userDTO);
         return "redirect:/login";
     }
 }
