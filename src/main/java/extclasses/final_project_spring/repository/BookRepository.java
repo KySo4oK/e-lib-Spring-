@@ -7,12 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findAllByAvailableIsTrue(Pageable pageable);
-
-    Optional<Book> findByName(String name);
 
     @Query(nativeQuery = true, value =
             "select * from book  \n" +
@@ -51,6 +48,4 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> getBooksByFilterUa(@Param("name") String partOfName,
                                   @Param("authors") String[] authors,
                                   @Param("tags") String[] tags, Pageable pageable);
-
-    Optional<Book> findByNameUa(String bookNameUa);
 }
