@@ -9,6 +9,7 @@
           crossorigin="anonymous">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript" src="js/user.js"></script>
 </head>
 <body style="text-align: center">
 <div id="app">
@@ -62,46 +63,6 @@
     </div>
     <div th:replace="fragments/footer :: footer">...</div>
 </div>
-<script type="text/javascript">
-    let app = new Vue({
-        el: '#app',
-        data: {
-            activeOrders: [],
-            passiveOrders: [],
-            picked: '',
-        },
-        async mounted() {
-            await this.getActiveOrders();
-            await this.getPassiveOrders();
-        },
-        methods: {
-            async getActiveOrders() {
-                let res = await axios.get('/user/active');
-                if (!res) return;
-                this.activeOrders = res.data;
-            },
-            async getPassiveOrders() {
-                let res = await axios.get('/user/passive');
-                if (!res) return;
-                this.passiveOrders = res.data;
-            },
-            async returnBook(order) {
-                let res = await axios.put('/user/return', order)
-                    .then((response) => {
-                        alert(response.data.message);
-                    })
-                    .catch((error) => {
-                        alert(error.response.data.error);
-                    });
-                if (!res) return;
-                await this.getActiveOrders();
-            },
-
-        }
-
-
-    });
-</script>
 <style lang="less">
     input {
         margin-top: 17px;

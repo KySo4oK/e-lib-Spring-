@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript" src="js/prospectus.js"></script>
 </head>
 <body style="text-align: center">
 <div id="app">
@@ -57,85 +58,6 @@
     </main>
     <div th:replace="fragments/footer :: footer">...</div>
 </div>
-<script type="text/javascript">
-    let app = new Vue({
-        el: '#app',
-        data: {
-            books: [],
-            tags: [],
-            addedTags: [],
-            addedAuthors: [],
-            partOfName: '',
-            authors: [],
-            page: 0,
-            filter: false,
-        },
-        async mounted() {
-            await this.getBooks();
-            await this.getAuthors();
-            await this.getTags()
-        },
-        methods: {
-            async changeList() {
-                this.page = 0;
-                this.filter = true;
-                await this.loadByFilter();
-            },
-            async loadByFilter() {
-                let filter = {
-                    tags: this.addedTags,
-                    authors: this.addedAuthors,
-                    name: '%' + this.partOfName + '%',
-                };
-                let res = await axios.post('/filter/' + this.page + "/5", filter)
-                    .catch((error) => {
-                        alert(error.response.data.error);
-                    });
-                if (!res) return;
-                if (this.page === 0) {
-                    this.books = res.data;
-                } else {
-                    this.books = this.books.concat(res.data);
-                }
-                this.page++;
-            },
-            async getTags() {
-                let res = await axios.get('/tags');
-                if (!res) return;
-                this.tags = res.data;
-            },
-            async getBooks() {
-                let res = await axios.get('/books/' + this.page + "/5");
-                if (!res) return;
-                this.books = this.books.concat(res.data);
-            },
-            async getAuthors() {
-                let res = await axios.get('/authors');
-                if (!res) return;
-                this.authors = res.data;
-            },
-            async orderBook(book) {
-                let res = await axios.post('/order', book)
-                    .then((response) => {
-                        alert(response.data.message);
-                    })
-                    .catch((error) => {
-                        alert(error.response.data.error);
-                    });
-                if (!res) return;
-            },
-            async loadMore() {
-                if (this.filter) {
-                    this.page++;
-                    await this.loadByFilter();
-                } else {
-                    this.page++;
-                    await this.getBooks();
-                }
-            }
-        }
-    });
-</script>
 <style lang="less">
     input {
         margin-top: 17px;

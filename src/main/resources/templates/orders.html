@@ -9,10 +9,8 @@
           crossorigin="anonymous">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <head>
-        <meta charset="UTF-8">
-        <title>Title</title>
-    </head>
+    <script type="text/javascript" src="js/orders.js"></script>
+</head>
 <body>
 <div id="app">
     <div th:replace="fragments/admin-header :: header">...</div>
@@ -69,47 +67,6 @@
     </div>
     <div th:replace="fragments/footer :: footer">...</div>
 </div>
-<script type="text/javascript">
-    let app = new Vue({
-        el: '#app',
-        data: {
-            activeOrders: [],
-            passiveOrders: [],
-            picked: '',
-        },
-        async mounted() {
-            await this.getActiveOrders();
-            await this.getPassiveOrders();
-        },
-        methods: {
-            async getActiveOrders() {
-                let res = await axios.get('/active');
-                if (!res) return;
-                this.activeOrders = res.data;
-            },
-            async getPassiveOrders() {
-                let res = await axios.get('/passive');
-                if (!res) return;
-                this.passiveOrders = res.data;
-            },
-            async permitOrder(order) {
-                let res = await axios.put('/permit', order)
-                    .then((response) => {
-                        alert(response.data.message);
-                    })
-                    .catch((error) => {
-                        alert(error.response.data.error);
-                    });
-                if (!res) return;
-                await this.getActiveOrders();
-                await this.getPassiveOrders();
-            },
-
-        }
-
-
-    });
-</script>
 <style lang="less">
     input {
         margin-top: 17px;
