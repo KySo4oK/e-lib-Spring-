@@ -166,7 +166,7 @@ public class BookService {
                 .nameUa(bookDTO.getNameUa())
                 .shelf(shelf)
                 .authors(authorService.getAuthorsFromStringArray(bookDTO.getAuthors()))
-                .tags(tagService.getTagsByStringArray(bookDTO.getTags()))
+                .tags(tagService.getTagsFromStringArray(bookDTO.getTags()))
                 .available(true)
                 .build();
     }
@@ -178,8 +178,8 @@ public class BookService {
      * @param pageable  - object, which is used for implementing pagination
      * @return - DTO result of getting books from database by filter
      */
-    public List<BookDTO> getAvailableBooksByFilter(FilterDTO filterDTO, Pageable pageable) {
-        return getBooksByFilter(filterDTO, pageable)
+    public List<BookDTO> getAvailableBookDTOsByFilter(FilterDTO filterDTO, Pageable pageable) {
+        return getAvailableBooksByFilter(filterDTO, pageable)
                 .stream()
                 .map(this::buildBookDTO)
                 .collect(Collectors.toList());
@@ -193,13 +193,13 @@ public class BookService {
      * @param pageable  - object, which is used for implementing pagination
      * @return - result of getting books from database by filter and locale
      */
-    private List<Book> getBooksByFilter(FilterDTO filterDTO, Pageable pageable) {
+    private List<Book> getAvailableBooksByFilter(FilterDTO filterDTO, Pageable pageable) {
         return LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ?
-                bookRepository.getBooksByFilter(
+                bookRepository.getAvailableBooksByFilter(
                         filterDTO.getName(),
                         filterDTO.getAuthors(),
                         filterDTO.getTags(), pageable) :
-                bookRepository.getBooksByFilterUa(
+                bookRepository.getAvailableBooksByFilterUa(
                         filterDTO.getName(),
                         filterDTO.getAuthors(),
                         filterDTO.getTags(), pageable);
@@ -210,7 +210,7 @@ public class BookService {
      *
      * @param bookDTO - DTO object of edited book by admin
      */
-    public void editBookAndSave(BookDTO bookDTO) {
+    public void saveEditedBook(BookDTO bookDTO) {
         log.info("save book {}", bookDTO);
         bookRepository.save(getEditedBook(bookDTO));
     }
@@ -226,7 +226,7 @@ public class BookService {
                 .findById(bookDTO.getId())
                 .orElseThrow(() -> new CustomException("book.not.found"));
         book.setAuthors(authorService.getAuthorsFromStringArray(bookDTO.getAuthors()));
-        book.setTags(tagService.getTagsByStringArray(bookDTO.getTags()));
+        book.setTags(tagService.getTagsFromStringArray(bookDTO.getTags()));
         return book;
     }
 

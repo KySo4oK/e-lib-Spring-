@@ -69,7 +69,7 @@ public class ProspectusController {
         log.info("get books by filter {}", filterDTO);
         Validator.checkFilterDTO(filterDTO);
         return bookService
-                .getAvailableBooksByFilter(filterDTO, pageable);
+                .getAvailableBookDTOsByFilter(filterDTO, pageable);
     }
 
     @PostMapping("/order")

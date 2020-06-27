@@ -34,7 +34,7 @@ public class TagService {
                 tag.getName() : tag.getNameUa();
     }
 
-    public List<Tag> getTagsByStringArray(String[] tags) {
+    public List<Tag> getTagsFromStringArray(String[] tags) {
         log.info("get tags from array {}", Arrays.toString(tags));
         return Arrays.stream(tags)
                 .map(x -> getByNameAndLocale(x)

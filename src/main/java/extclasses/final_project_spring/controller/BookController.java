@@ -34,7 +34,7 @@ public class BookController {
     @PutMapping("/edit")
     public ResponseEntity<Map<String, String>> editBook(@RequestBody BookDTO bookDTO) {
         log.info("edit book {}", bookDTO.getName());
-        bookService.editBookAndSave(bookDTO);
+        bookService.saveEditedBook(bookDTO);
         return responseEntity.getSuccessResponseEntityWithMessage("book.edited");
     }
 

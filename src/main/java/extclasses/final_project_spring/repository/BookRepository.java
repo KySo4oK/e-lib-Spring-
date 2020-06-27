@@ -26,9 +26,9 @@ public interface BookRepository extends JpaRepository<Book, Long> {
                     "                                   from tag  \n" +
                     "                                   where name in (:tags)))\n" +
                     "and name like :name\n")
-    List<Book> getBooksByFilter(@Param("name") String partOfName,
-                                @Param("authors") String[] authors,
-                                @Param("tags") String[] tags, Pageable pageable);
+    List<Book> getAvailableBooksByFilter(@Param("name") String partOfName,
+                                         @Param("authors") String[] authors,
+                                         @Param("tags") String[] tags, Pageable pageable);
 
     @Query(nativeQuery = true, value =
             "select * from book  \n" +
@@ -45,7 +45,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
                     "                                   from tag  \n" +
                     "                                   where name_ua in (:tags)))\n" +
                     "and name_ua like :name\n")
-    List<Book> getBooksByFilterUa(@Param("name") String partOfName,
-                                  @Param("authors") String[] authors,
-                                  @Param("tags") String[] tags, Pageable pageable);
+    List<Book> getAvailableBooksByFilterUa(@Param("name") String partOfName,
+                                           @Param("authors") String[] authors,
+                                           @Param("tags") String[] tags, Pageable pageable);
 }
