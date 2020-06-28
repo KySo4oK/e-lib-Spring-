@@ -13,15 +13,15 @@
 </head>
 <body>
 <header>
-    <div class="navbar navbar-default" style="background-color: aquamarine;">
-        <h1 style="float: left"th:text="#{site.name}"></h1>
-        <span><a style="float: right; margin-right: 5px" href="/?language=ua"
-                 th:text="#{label.lang.ua}"></a></span>
-        <span><a style="float: right; margin-right: 5px" href="/?language=en"
-                 th:text="#{label.lang.en}"></a></span>
-        <span><a style="float: right; margin-right: 5px" href="/login" th:text="#{sign.in}"></a></span>
-        <span><a style="float: right; margin-right: 5px" href="/reg" th:text="#{sign.up}"></a></span>
-        <span><a style="float: right; margin-right: 5px" href="/" th:text="#{main}"></a></span>
+    <div class="navbar navbar-default">
+        <span class="header-title" th:text="#{site.name}"></span>
+        <div class="navigation">
+            <div class="header-link"><a href="/" th:text="#{main}"></a></div>
+            <div class="header-link"><a href="/reg" th:text="#{sign.up}"></a></div>
+            <div class="header-link"><a href="/login" th:text="#{sign.in}"></a></div>
+            <div class="header-link"><a href="/?language=en" th:text="#{label.lang.en}"></a></div>
+            <div class="header-link"><a href="/?language=ua" th:text="#{label.lang.ua}"></a></div>
+        </div>
     </div>
 </header>
 </body>

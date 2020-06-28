@@ -13,16 +13,15 @@
 </head>
 <body>
 <header>
-    <div class="navbar navbar-default" style="background-color: aquamarine; margin: 0 !important">
-        <h1 style="float: left"th:text="#{site.name}"></h1>
-        <span><a style="float: right; margin-right: 5px" href="/user?language=ua"
-                 th:text="#{label.lang.ua}"></a></span>
-        <span><a style="float: right; margin-right: 5px" href="/user?language=en"
-                 th:text="#{label.lang.en}"></a></span>
-        <span><a style="float: right; margin-right: 5px" href="/logout" th:text="#{logout}"></a></span>
-        <span><a style="float: right; margin-right: 5px" href="/user" th:text="#{my.books}"></a></span>
-        <span><a style="float: right; margin-right: 5px" href="/prospectus" th:text="#{prospectus}"></a></span>
-        <span><a style="float: right; margin-right: 5px" href="/" th:text="#{main}"></a></span>
+    <div class="navbar navbar-default">
+        <span class="header-title" th:text="#{site.name}"></span>
+        <div class="navigation">
+            <div class="header-link"><a href="/prospectus" th:text="#{prospectus}"></a></div>
+            <div class="header-link"><a href="/user" th:text="#{my.books}"></a></div>
+            <div class="header-link"><a href="/logout" th:text="#{logout}"></a></div>
+            <div class="header-link"><a href="/user?language=en" th:text="#{label.lang.en}"></a></div>
+            <div class="header-link"><a href="/user?language=ua" th:text="#{label.lang.ua}"></a></div>
+        </div>
     </div>
 </header>
 </body>
