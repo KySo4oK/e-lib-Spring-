@@ -14,3 +14,12 @@ th {
     width: 100%;
     float: right;
 }
+
+input {
+    margin-top: 17px;
+}
+
+body {
+    font-family: Arial;
+    font-style: normal;
+}
