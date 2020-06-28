@@ -9,14 +9,14 @@ import java.util.Collections;
 import java.util.Map;
 
 @Component
-public class SuccessResponseEntity {
+public class CustomSuccessResponseEntity {
     private final MessageSource messageSource;
 
-    public SuccessResponseEntity(MessageSource messageSource) {
+    public CustomSuccessResponseEntity(MessageSource messageSource) {
         this.messageSource = messageSource;
     }
 
-    public ResponseEntity<Map<String, String>> getSuccessResponseEntityWithMessage(String message) {
+    public ResponseEntity<Map<String, String>> getEntityWithMessage(String message) {
         return ResponseEntity.ok().body(
                 Collections.singletonMap("message",
                         messageSource.getMessage(message, null, LocaleContextHolder.getLocale())));

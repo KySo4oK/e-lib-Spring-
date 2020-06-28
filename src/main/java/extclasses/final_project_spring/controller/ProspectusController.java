@@ -6,7 +6,7 @@ import extclasses.final_project_spring.service.AuthorService;
 import extclasses.final_project_spring.service.BookService;
 import extclasses.final_project_spring.service.OrderService;
 import extclasses.final_project_spring.service.TagService;
-import extclasses.final_project_spring.util.SuccessResponseEntity;
+import extclasses.final_project_spring.util.CustomSuccessResponseEntity;
 import extclasses.final_project_spring.util.Validator;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.PageRequest;
@@ -26,9 +26,9 @@ public class ProspectusController {
     private final TagService tagService;
     private final AuthorService authorService;
     private final OrderService orderService;
-    private final SuccessResponseEntity responseEntity;
+    private final CustomSuccessResponseEntity responseEntity;
 
-    public ProspectusController(BookService bookService, TagService tagService, AuthorService authorService, OrderService orderService, SuccessResponseEntity responseEntity) {
+    public ProspectusController(BookService bookService, TagService tagService, AuthorService authorService, OrderService orderService, CustomSuccessResponseEntity responseEntity) {
         this.bookService = bookService;
         this.tagService = tagService;
         this.authorService = authorService;
@@ -77,6 +77,6 @@ public class ProspectusController {
     public ResponseEntity<Map<String, String>> orderBook(@RequestBody BookDTO bookDTO, Authentication authentication) {
         log.info("order book {}", bookDTO.getName());
         orderService.createAndSaveNewOrder(bookDTO, authentication.getName());
-        return responseEntity.getSuccessResponseEntityWithMessage("order.created");
+        return responseEntity.getEntityWithMessage("order.created");
     }
 }

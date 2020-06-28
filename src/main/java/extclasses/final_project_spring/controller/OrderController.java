@@ -2,7 +2,7 @@ package extclasses.final_project_spring.controller;
 
 import extclasses.final_project_spring.dto.OrderDTO;
 import extclasses.final_project_spring.service.OrderService;
-import extclasses.final_project_spring.util.SuccessResponseEntity;
+import extclasses.final_project_spring.util.CustomSuccessResponseEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -15,9 +15,9 @@ import java.util.Map;
 @RestController
 public class OrderController {
     private final OrderService orderService;
-    private final SuccessResponseEntity responseEntity;
+    private final CustomSuccessResponseEntity responseEntity;
 
-    public OrderController(OrderService orderService, SuccessResponseEntity responseEntity) {
+    public OrderController(OrderService orderService, CustomSuccessResponseEntity responseEntity) {
         this.orderService = orderService;
         this.responseEntity = responseEntity;
     }
@@ -26,7 +26,7 @@ public class OrderController {
     public ResponseEntity<Map<String, String>> permitOrder(@RequestBody OrderDTO orderDTO) {
         log.info("permit order {}", orderDTO);
         orderService.permitOrder(orderDTO);
-        return responseEntity.getSuccessResponseEntityWithMessage("order.permitted");
+        return responseEntity.getEntityWithMessage("order.permitted");
     }
 
     @GetMapping("/active")
@@ -57,6 +57,6 @@ public class OrderController {
     public ResponseEntity<Map<String, String>> returnBook(@RequestBody OrderDTO orderDTO) {
         log.info("return book {}", orderDTO.getBookName());
         orderService.returnBook(orderDTO);
-        return responseEntity.getSuccessResponseEntityWithMessage("book.returned");
+        return responseEntity.getEntityWithMessage("book.returned");
     }
 }
