@@ -10,6 +10,9 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script type="text/javascript" src="js/book-manage.js"></script>
+    <link rel="stylesheet" th:href="@{/css/header.css}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <body style="text-align: center">
 <div id="app">
     <div th:replace="fragments/admin-header :: header">...</div>
@@ -64,48 +67,51 @@
         <div th:insert="fragments/filter.html :: filter"></div>
         <!--        books -->
         <div>
-            <table style="width: 75%;margin-left:25%; padding-top: 10%; display: table" class="table table-borderless">
+            <table style="width: 60%;margin-left:25%; padding-top: 10%; display: table" class="table table-borderless">
                 <thead>
                 <tr>
+                    <th>#</th>
                     <th th:text="#{book.name}"></th>
-                    <th th:text="#{authors}"></th>
                     <th th:text="#{tags}"></th>
-                    <th th:text="#{edit}"></th>
-                    <th th:text="#{delete}"></th>
+                    <th th:text="#{authors}"></th>
+                    <th th:text="#{actions}"></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="book in books">
-                    <td><h1 v-text="book.name"></h1></td>
-                    <td>
+                <tr v-for="(book, index) in books">
+                    <td>{{index+1}}</td>
+                    <td> {{book.name}}</td>
+                    <td style="font-size: 12px">
                         <div id="editTags" class="col-md-6 boxes">
                             <div v-for="tag in tags">
                                 <div style="display: inline;">
                                     <input style="display: inline; float: left; margin-left: 0px" type="checkbox"
                                            v-bind:value="tag"
                                            v-model="book.tags">
-                                    <h6 style="display: inline; margin-right: 0px;">{{tag}}</h6>
+                                    {{tag}}
                                 </div>
                             </div>
                         </div>
                     </td>
-                    <td>
-                        <div style="padding-top: 10px" id="editAuthors" class="col-md-6 boxes">
+                    <td style="font-size: 12px">
+                        <div id="editAuthors" class="col-md-6 boxes">
                             <div v-for="author in authors">
                                 <div style="display: inline;">
                                     <input style="display: inline; float: left; margin-left: 0px" type="checkbox"
                                            v-bind:value="author"
                                            v-model="book.authors">
-                                    <h6 style="display: inline;">{{author}}</h6>
+                                    {{author}}
                                 </div>
                             </div>
                         </div>
                     </td>
-                    <td>
-                        <button class="btn btn-warning" v-on:click="editBook(book)" th:text="#{edit}"></button>
-                    </td>
-                    <td>
-                        <button class="btn btn-warning" v-on:click="deleteBook(book)" th:text="#{delete}"></button>
+                    <td style="max-width: 10%">
+                        <button class="btn btn-success" v-on:click="editBook(book)">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </button>
+                        <button class="btn btn-danger" v-on:click="deleteBook(book)">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </button>
                     </td>
                 </tr>
                 </tbody>
@@ -126,18 +132,8 @@
         font-style: normal;
     }
 
-    header {
-        position: fixed;
-        height: 10%;
-        left: 0;
-        top: 0;
-        width: 100%;
-        z-index: 10;
-    }
-
-    span {
-        font-size: 30px;
-        height: content-box;
+    th {
+        text-align: center;
     }
 </style>
 </body>
