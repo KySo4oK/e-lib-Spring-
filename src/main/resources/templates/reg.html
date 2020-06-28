@@ -16,7 +16,7 @@
     <div class="form-wrapper">
         <p class="h3 text-center mb-4" th:text="#{sign.up}"></p>
         <!--/*@thymesVar id="user" type="extclasses.final_project_spring.dto.UserDTO"*/-->
-        <form action="#" th:action="@{/reg}" th:object="${user}" method="post" style="max-width: 500px; margin: auto;">
+        <form action="#" th:action="@{/reg}" th:object="${user}" method="post">
             <input class="form-control" type="text" th:placeholder="#{username}" th:field="*{username}">
             <p class="alert alert-warning" th:each="error: ${#fields.errors('username')}"
                th:text="${error}">Validation error</p>
