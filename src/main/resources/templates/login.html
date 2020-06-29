@@ -9,7 +9,7 @@
           crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/header.css}"/>
     <link rel="stylesheet" th:href="@{/css/footer.css}"/>
-    <link rel="stylesheet" th:href="@{/static/css/guest.css}"/>
+    <link rel="stylesheet" th:href="@{/css/guest.css}"/>
 <body>
 <div id="app">
     <div th:replace="fragments/guest-header :: header">...</div>
@@ -25,7 +25,7 @@
             </div>
         </form>
     </div>
-    <div th:replace="fragments/footer :: footer">...</div>
 </div>
+<div th:replace="fragments/footer :: footer">...</div>
 </body>
 </html>
