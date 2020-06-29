@@ -1,0 +1,44 @@
+input {
+    margin-top: 17px;
+}
+
+body {
+    font-family: Arial;
+    font-style: normal;
+    text-align: center;
+}
+
+table {
+    width: 60%;
+    padding-top: 10%;
+    display: table;
+}
+
+th {
+    text-align: center;
+}
+
+header {
+    position: fixed;
+    height: 10%;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+span {
+    font-size: 30px;
+    height: content-box;
+}
+
+.table-wrapper {
+    padding-top: 3%;
+}
+
+.table {
+    width: 75%;
+    margin-left: 25%;
+    padding-top: 10%;
+    display: table;
+}
