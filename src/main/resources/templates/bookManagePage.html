@@ -19,7 +19,7 @@
 <body style="text-align: center">
 <div id="app">
     <div th:replace="fragments/admin-header :: header">...</div>
-    <div style="padding-top: 10%; text-align: center; width: 83%; float: right">
+    <div class="check-fragment">
         <input type="radio" id="one" value="1" v-model="picked">
         <label for="one" th:text="#{add.book}"></label>
         <input type="radio" id="two" value="2" v-model="picked">
@@ -27,41 +27,35 @@
         <hr>
     </div>
     <!--    add-->
-    <div v-if="picked==1" id="add" style="max-width: 500px; margin: auto;">
-        <input id="book_name" type="text" class="form-control" th:placeholder="#{book.name.en}"
-               v-model="addedBook.name">
-        <input id="book_name_ua" type="text" class="form-control" th:placeholder="#{book.name.ua}"
-               v-model="addedBook.nameUa">
-        <!--            tags-->
-        <div id="tagsChecks" class="col-md-6 boxes">
-            <div v-for="tag in tags">
-                <div style="display: inline;">
-                    <input style="display: inline; float: left; margin-left: 0px" type="checkbox"
+    <div v-if="picked==1" id="add">
+        <div class="w3-sidebar w3-light-grey w3-bar-block">
+            <div class="col-md-6 boxes" style="padding-top: 15%;">
+                <!--            tags-->
+                <label th:text="#{select.tags}"></label>
+                <div v-for="tag in tags">
+                    <input class="input-checkbox" type="checkbox"
                            v-bind:value="tag"
                            v-model="addedBook.tags">
-                    <h6 style="display: inline; margin-right: 0px;">{{tag}}</h6>
+                    {{tag}}
                 </div>
-            </div>
-        </div>
-        <br>
-        <label for="tagsCheckbox" style="margin: 20px ;" th:text="#{select.tags}"></label>
-        <br>
-        <!--            authors-->
-        <div style="padding-top: 10px" id="authorsСhecks" class="col-md-6 boxes">
-            <div v-for="author in authors">
-                <div style="display: inline;">
-                    <input style="display: inline; float: left; margin-left: 0px" type="checkbox"
+                <!--            authors-->
+                <label th:text="#{select.authors}"></label>
+                <div v-for="author in authors">
+                    <input class="input-checkbox" type="checkbox"
                            v-bind:value="author"
                            v-model="addedBook.authors">
-                    <h6 style="display: inline;">{{author}}</h6>
+                    {{author}}
                 </div>
             </div>
         </div>
-        <br>
-        <label for="authorsCheckbox" style="margin: 20px" th:text="#{select.authors}"></label>
-        <br>
-        <div style="text-align: center; margin-top: 20px">
-            <button v-on:click="addBook" class="btn btn-warning" style="width: 30%;" th:text="#{load}"></button>
+        <div class="book-names-input">
+            <input id="book_name" type="text" class="form-control" th:placeholder="#{book.name.en}"
+                   v-model="addedBook.name">
+            <input id="book_name_ua" type="text" class="form-control" th:placeholder="#{book.name.ua}"
+                   v-model="addedBook.nameUa">
+            <div>
+                <button v-on:click="addBook" class="btn btn-warning" style="width: 30%;" th:text="#{load}"></button>
+            </div>
         </div>
     </div>
     <!--    edit or delete-->
@@ -70,7 +64,7 @@
         <div th:insert="fragments/filter.html :: filter"></div>
         <!--        books -->
         <div>
-            <table style="width: 60%;margin-left:25%; padding-top: 10%; display: table" class="table table-borderless">
+            <table class="table table-borderless">
                 <thead>
                 <tr>
                     <th>#</th>
@@ -84,11 +78,11 @@
                 <tr v-for="(book, index) in books">
                     <td>{{index+1}}</td>
                     <td> {{book.name}}</td>
-                    <td style="font-size: 12px">
+                    <td class="attribute-list">
                         <div id="editTags" class="col-md-6 boxes">
                             <div v-for="tag in tags">
-                                <div style="display: inline;">
-                                    <input style="display: inline; float: left; margin-left: 0px" type="checkbox"
+                                <div class="attribute-list-inline">
+                                    <input type="checkbox"
                                            v-bind:value="tag"
                                            v-model="book.tags">
                                     {{tag}}
@@ -96,11 +90,11 @@
                             </div>
                         </div>
                     </td>
-                    <td style="font-size: 12px">
+                    <td class="attribute-list">
                         <div id="editAuthors" class="col-md-6 boxes">
                             <div v-for="author in authors">
-                                <div style="display: inline;">
-                                    <input style="display: inline; float: left; margin-left: 0px" type="checkbox"
+                                <div class="attribute-list-inline">
+                                    <input type="checkbox"
                                            v-bind:value="author"
                                            v-model="book.authors">
                                     {{author}}
@@ -108,7 +102,7 @@
                             </div>
                         </div>
                     </td>
-                    <td style="max-width: 10%">
+                    <td class="buttons-actions">
                         <button class="btn btn-success" v-on:click="editBook(book)">
                             <i class="fa fa-pencil" aria-hidden="true"></i>
                         </button>
@@ -120,24 +114,11 @@
                 </tbody>
             </table>
         </div>
-        <button class="btn btn-warning" style="width: 30%;" @click="loadMore()" th:text="#{load.more}">
+        <button class="btn btn-success" @click="loadMore()">
+            <i class="fa fa-chevron-down"></i>
         </button>
     </div>
     <div th:replace="fragments/footer :: footer">...</div>
 </div>
-<style lang="less">
-    input {
-        margin-top: 17px;
-    }
-
-    body {
-        font-family: Arial;
-        font-style: normal;
-    }
-
-    th {
-        text-align: center;
-    }
-</style>
 </body>
 </html>

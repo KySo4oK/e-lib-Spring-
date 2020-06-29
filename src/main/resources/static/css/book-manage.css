@@ -1,0 +1,49 @@
+input {
+    margin-top: 17px;
+}
+
+body {
+    font-family: Arial;
+    font-style: normal;
+}
+
+th {
+    text-align: center;
+}
+
+.check-fragment {
+    padding-top: 5%;
+    text-align: center;
+    width: 83%;
+    float: right;
+}
+
+.table {
+    width: 60%;
+    margin-left: 25%;
+    padding-top: 10%;
+    display: table;
+}
+
+.attribute-list {
+    font-size: 12px;
+}
+
+.attribute-list-inline {
+    display: inline;
+}
+
+.attribute-list-inline input {
+    display: inline;
+    float: left;
+    margin-left: 0px;
+}
+
+.buttons-actions {
+    max-width: 10%;
+}
+
+.book-names-input {
+    float: right;
+    width: 75%;
+}
