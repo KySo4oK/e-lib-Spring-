@@ -23,3 +23,7 @@ body {
     font-family: Arial;
     font-style: normal;
 }
+
+td {
+    text-align: center;
+}
