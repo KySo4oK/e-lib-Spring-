@@ -31,3 +31,9 @@ form {
     max-width: 500px;
     margin: auto;
 }
+
+.task-wrapper {
+    padding-top: 5%;
+    text-align: left;
+    font-size: 20px;
+}

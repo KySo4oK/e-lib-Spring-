@@ -8,11 +8,28 @@
           crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/header.css}"/>
     <link rel="stylesheet" th:href="@{/css/footer.css}"/>
-    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" th:href="@{/css/reg.css}"/>
 </head>
-<body style="text-align: center">
+<body>
 <div id="app">
     <div th:replace="fragments/guest-header :: header">...</div>
+    <div class="task-wrapper">
+        <strong>
+            16. Система Библиотека. Создайте Каталог, по которому можно искать по:
+            <ul>
+                <li>Автору (одному из группы).</li>
+                <li>Названию книги или её фрагменте.</li>
+                <li>Одному из ключевых слов книги (атрибут книги).</li>
+            </ul>
+            Каталог книг заполняет Администратор, добавляя и изменяя/удаляя их. Каждая книга должна иметь адрес (место
+            на
+            полке) или читателя. Читатель чтобы взять книгу регистрируется, оставляя э-мейл и номер телефона. Книга
+            может
+            быть взята у Администратора в библиотеке на время не более месяца,
+            только в случае если книга доступна в библиотеке. Администратор должен иметь страницу где отражаются взятые
+            книги и читатели, которые пользуются книгой.
+        </strong>
+    </div>
     <div th:replace="fragments/footer :: footer">...</div>
 </div>
 </body>
