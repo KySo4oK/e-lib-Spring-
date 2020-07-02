@@ -7,9 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
-    Optional<Order> findByActiveFalseAndBook_NameAndUser_Username(String bookName, String userName);
-
-    Optional<Order> findByActiveTrueAndBook_NameAndUser_Username(String bookName, String userName);
 
     List<Order> findAllByActiveIsTrue();
 
