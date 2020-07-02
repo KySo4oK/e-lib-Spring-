@@ -1,4 +1,4 @@
-package extclasses.final_project_spring.util;
+package extclasses.final_project_spring.config;
 
 import extclasses.final_project_spring.exception.CustomException;
 import org.springframework.context.MessageSource;
