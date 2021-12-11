@@ -15,6 +15,6 @@ public class UserDTO {
     private String email;
     @Pattern(regexp = "^[+]*[(]?[0-9]{1,4}[)]?[-\\s./0-9]*$", message = "{valid.user.phone}")
     private String phone;
-    @Pattern(regexp = "^.{4,30}$", message = "{valid.user.password}")
+    @Pattern(regexp = "^.{8,}$", message = "{valid.user.password}")
     private String password;
 }
