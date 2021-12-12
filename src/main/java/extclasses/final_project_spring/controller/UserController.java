@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @ResponseBody
-    @GetMapping("/user")
+    @GetMapping("/check/user")
     public User saveNewUser(@RequestParam("username") String username) {
         log.info("{}", username);
         return userService.loadUserByUsername(username);
