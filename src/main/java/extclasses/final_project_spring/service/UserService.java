@@ -32,6 +32,7 @@ public class UserService implements UserDetailsService {
         try {
             userRepository.save(user);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new CustomException("user.already.exist");
         }
     }

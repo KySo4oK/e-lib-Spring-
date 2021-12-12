@@ -1,8 +1,10 @@
 package extclasses.final_project_spring.entity;
 
+import extclasses.final_project_spring.config.CryptoConverter;
 import extclasses.final_project_spring.dto.UserDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnTransformer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -26,6 +28,7 @@ public class User implements UserDetails {
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
+    @Convert(converter = CryptoConverter.class)
     private String email;
     private String phone;
 
